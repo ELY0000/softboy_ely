@@ -9,7 +9,8 @@
         .heart { position: fixed; top: -10%; color: #ff4d6d; font-size: 20px; user-select: none; z-index: 1; animation: fall linear forwards; }
         @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
         .card { background: rgba(255, 255, 255, 0.95); padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(255, 182, 193, 0.6); text-align: center; max-width: 400px; width: 85%; border: 2px solid #ffb6c1; z-index: 10; position: relative; }
-        input { width: 80%; padding: 12px; margin: 20px 0; border: 2px solid #ffb6c1; border-radius: 10px; outline: none; text-align: center; }
+        h2 { color: #ff4d6d; }
+        input { width: 80%; padding: 12px; margin: 20px 0; border: 2px solid #ffb6c1; border-radius: 10px; outline: none; text-align: center; font-size: 16px; }
         button { background-color: #ff4d6d; color: white; padding: 12px 25px; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; }
         #message-box { display: none; text-align: left; font-size: 1.05rem; line-height: 1.6; color: #333; white-space: pre-wrap; }
     </style>
@@ -22,8 +23,9 @@
 
 <div class="card">
     <div id="input-ui">
-        <h2 style="color: #ff4d6d;">Uhm... 🥺</h2>
-        <input type="text" id="nameInput" placeholder="Enter your name...">
+        <h2>Uhm... 🥺</h2>
+        <p>May I know your name?</p>
+        <input type="text" id="nameInput" placeholder="Enter name here...">
         <br>
         <button onclick="start()">Reveal Secret</button>
     </div>
@@ -44,13 +46,17 @@
     function start() {
         const name = document.getElementById('nameInput').value;
         if (!name) return alert("Please enter your name!");
+
+        // Play Music & Start Hearts
         document.getElementById('bgMusic').play();
         setInterval(createHeart, 300);
+
         document.getElementById('input-ui').style.display = 'none';
         const box = document.getElementById('message-box');
         box.style.display = 'block';
         
-        const text = `Hello, ${name}!\n\nI've been wanting to tell you something... (⸝⸝⸝>﹏<⸝⸝⸝)\n\nI just can't stop thinking about how amazing you are. I LIKE YOU 💖\n\nTake care ❤️`;
+        const text = `Hello, ${name}!\n\nI've been wanting to tell you something... (⸝⸝⸝>﹏<⸝⸝⸝)\n\nI just can't stop thinking about how amazing you are. You're honestly so attractive, but it's more than just that.\n\nThere's something about you that keeps me thinking about you all the time.\n\nI LIKE YOU 💖\n\nI made this just for you. No pressure, okay? \n\nTake care ❤️`;
+
         let i = 0;
         function type() {
             if (i < text.length) {
