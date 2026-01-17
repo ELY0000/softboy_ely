@@ -1,68 +1,195 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For You ❤️</title>
-    <style>
-        body { margin: 0; overflow: hidden; display: flex; justify-content: center; align-items: center; min-height: 100vh; background-color: #fff0f3; font-family: 'Courier New', Courier, monospace; }
-        .heart { position: fixed; top: -10%; color: #ff4d6d; font-size: 20px; user-select: none; z-index: 1; animation: fall linear forwards; }
-        @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
-        .card { background: rgba(255, 255, 255, 0.95); padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(255, 182, 193, 0.6); text-align: center; max-width: 400px; width: 85%; border: 2px solid #ffb6c1; z-index: 10; position: relative; }
-        h2 { color: #ff4d6d; }
-        input { width: 80%; padding: 12px; margin: 20px 0; border: 2px solid #ffb6c1; border-radius: 10px; outline: none; text-align: center; font-size: 16px; }
-        button { background-color: #ff4d6d; color: white; padding: 12px 25px; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; }
-        #message-box { display: none; text-align: left; font-size: 1.05rem; line-height: 1.6; color: #333; white-space: pre-wrap; }
-    </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Uhm...</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden; /* Prevents scrollbars from hearts */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background-color: #fff0f3;
+      background-image: url('https://www.transparenttextures.com/patterns/heart.png');
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    /* Raining Hearts Style */
+    .heart {
+      position: fixed;
+      top: -10%;
+      color: #ff4d6d;
+      font-size: 20px;
+      user-select: none;
+      z-index: 0;
+      animation: fall linear forwards;
+    }
+    @keyframes fall {
+      to { transform: translateY(110vh) rotate(360deg); }
+    }
+
+    .card {
+      background: white;
+      padding: 25px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(255, 182, 193, 0.4);
+      text-align: center;
+      max-width: 400px;
+      width: 85%;
+      border: 2px solid #ffb6c1;
+      z-index: 10;
+      position: relative;
+    }
+
+    h2 { color: #ff4d6d; font-size: 1.5rem; }
+
+    input {
+      width: 80%;
+      padding: 12px;
+      margin: 8px 0 12px;
+      border: 2px solid #ffb6c1;
+      border-radius: 10px;
+      outline: none;
+      font-size: 1rem;
+    }
+
+    .btn-group {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    button {
+      background-color: #ff4d6d;
+      color: white;
+      padding: 12px 25px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    #noBtn {
+      background-color: #adb5bd;
+      transition: 0.1s;
+    }
+
+    #message-box {
+      display: none;
+      text-align: left;
+      font-size: 1rem;
+      line-height: 1.6;
+      color: #333;
+      white-space: pre-wrap;
+      margin-top: 8px;
+    }
+
+    .cursor {
+      display: inline-block;
+      width: 8px;
+      background-color: #ff4d6d;
+      animation: blink 0.7s infinite;
+      margin-left: 2px;
+    }
+    @keyframes blink { 50% { opacity: 0; } }
+  </style>
 </head>
 <body>
 
-<audio id="bgMusic" loop>
+  <audio id="bgMusic" loop>
     <source src="https://files.catbox.moe/6w1vto.mp3" type="audio/mpeg">
-</audio>
+  </audio>
 
-<div class="card">
+  <div class="card">
     <div id="input-ui">
-        <h2>Uhm... 🥺</h2>
-        <p>May I know your name?</p>
-        <input type="text" id="nameInput" placeholder="Enter name here...">
-        <br>
-        <button onclick="start()">Reveal Secret</button>
+      <h2>Please Enter Your Name 🥺</h2>
+      <input type="text" id="nameInput" placeholder="Name here..." autocomplete="off" />
+      <div class="btn-group">
+        <button onclick="startProcess()">Submit</button>
+        <button id="noBtn" onmouseover="moveNo()" onclick="moveNo()">No</button>
+      </div>
     </div>
+
     <div id="message-box"></div>
-</div>
+  </div>
 
-<script>
+  <script>
+    // Raining hearts function
     function createHeart() {
-        const heart = document.createElement('div');
-        heart.classList.add('heart');
-        heart.innerHTML = '❤️';
-        heart.style.left = Math.random() * 100 + 'vw';
-        heart.style.animationDuration = Math.random() * 2 + 3 + 's'; 
-        document.body.appendChild(heart);
-        setTimeout(() => heart.remove(), 5000);
+      const heart = document.createElement('div');
+      heart.classList.add('heart');
+      heart.innerHTML = '❤️';
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.animationDuration = Math.random() * 2 + 3 + 's';
+      heart.style.opacity = Math.random();
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 5000);
     }
 
-    function start() {
-        const name = document.getElementById('nameInput').value;
-        if (!name) return alert("Please enter your name!");
-        document.getElementById('bgMusic').play();
-        setInterval(createHeart, 300);
-        document.getElementById('input-ui').style.display = 'none';
-        const box = document.getElementById('message-box');
-        box.style.display = 'block';
-        
-        const text = `Hello, ${name}!\n\nI've been wanting to tell you something... (⸝⸝⸝>﹏<⸝⸝⸝)\n\nI just can't stop thinking about how amazing you are. You're honestly so attractive, but it's more than just that.\n\nI LIKE YOU 💖\n\nI made this just for you. No pressure, okay? \n\nTake care ❤️`;
-        let i = 0;
-        function type() {
-            if (i < text.length) {
-                box.innerHTML = text.substring(0, i + 1) + '|';
-                i++;
-                setTimeout(type, 50);
-            } else { box.innerHTML = text; }
-        }
-        type();
+    // Move "No" button
+    function moveNo() {
+      const btn = document.getElementById('noBtn');
+      const x = Math.random() * (window.innerWidth - btn.offsetWidth);
+      const y = Math.random() * (window.innerHeight - btn.offsetHeight);
+      btn.style.position = 'fixed';
+      btn.style.left = x + 'px';
+      btn.style.top = y + 'px';
     }
-</script>
+
+    function msg(name) {
+      return [
+        `Hello, ${name}!`,
+        '',
+        "I want to confess u something, i made this long message to confess my feelings for you idk how i felt right now, i just wanna express my feelings to u and i want to clear things with you",
+        '',
+        "Yes i like u for a long time na, hahahaha sound cringe ba? i know you like someone else and there's so many people better than me, but i just want you to know that i likee you.",
+        '',
+        "Every time I see you, my heart races, and I can't help but feel like there's something special between us. I admire your kindness, your intelligence, and your sense of humor.",
+        '',
+        "I know that it may be a surprise to you, and I understand if you don't feel the same way. But I couldn't go on keeping this to myself any longer.",
+        '',
+        "I made this code just to show u how deeply I'm in love with you.",
+        '',
+        "take caree🫶🏻",
+        '',
+        "- Ely"
+      ].join('\n');
+    }
+
+    function startProcess() {
+      const nameInput = document.getElementById('nameInput');
+      const name = nameInput.value.trim();
+      if (!name) return;
+
+      // Play Music and Start Hearts
+      document.getElementById('bgMusic').play();
+      setInterval(createHeart, 300);
+
+      document.getElementById('input-ui').style.display = 'none';
+      const box = document.getElementById('message-box');
+      box.style.display = 'block';
+
+      const fullText = msg(name);
+      let i = 0;
+
+      function type() {
+        if (i < fullText.length) {
+          box.textContent = fullText.substring(0, i + 1);
+          const cursor = document.createElement('span');
+          cursor.className = 'cursor';
+          cursor.textContent = '|';
+          box.appendChild(cursor);
+          i++;
+          setTimeout(type, 50);
+        } else {
+          box.textContent = fullText;
+        }
+      }
+      type();
+    }
+  </script>
 </body>
 </html>
