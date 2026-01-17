@@ -46,17 +46,13 @@
     function start() {
         const name = document.getElementById('nameInput').value;
         if (!name) return alert("Please enter your name!");
-
-        // Play Music & Start Hearts
         document.getElementById('bgMusic').play();
         setInterval(createHeart, 300);
-
         document.getElementById('input-ui').style.display = 'none';
         const box = document.getElementById('message-box');
         box.style.display = 'block';
         
-        const text = `Hello, ${name}!\n\nI've been wanting to tell you something... (⸝⸝⸝>﹏<⸝⸝⸝)\n\nI just can't stop thinking about how amazing you are. You're honestly so attractive, but it's more than just that.\n\nThere's something about you that keeps me thinking about you all the time.\n\nI LIKE YOU 💖\n\nI made this just for you. No pressure, okay? \n\nTake care ❤️`;
-
+        const text = `Hello, ${name}!\n\nI've been wanting to tell you something... (⸝⸝⸝>﹏<⸝⸝⸝)\n\nI just can't stop thinking about how amazing you are. You're honestly so attractive, but it's more than just that.\n\nI LIKE YOU 💖\n\nI made this just for you. No pressure, okay? \n\nTake care ❤️`;
         let i = 0;
         function type() {
             if (i < text.length) {
