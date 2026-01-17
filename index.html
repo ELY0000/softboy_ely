@@ -10,9 +10,9 @@
     @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
     .card { background: white; padding: 25px; border-radius: 20px; box-shadow: 0 10px 30px rgba(255, 182, 193, 0.4); text-align: center; max-width: 320px; width: 85%; border: 2px solid #ffb6c1; z-index: 10; position: relative; }
     h2 { color: #ff4d6d; font-size: 1.3rem; margin-bottom: 15px; }
-    input { width: 90%; padding: 12px 0; margin: 10px 0 20px; border: 2px solid #ffb6c1; border-radius: 10px; outline: none; font-size: 1rem; text-align: center; }
+    input { width: 90%; padding: 12px 0; margin: 10px 0 20px; border: 2px solid #ffb6c1; border-radius: 10px; outline: none; font-size: 1rem; text-align: center; box-sizing: border-box; }
     .btn-group { display: flex; justify-content: center; align-items: center; gap: 15px; width: 100%; }
-    button { background-color: #ff4d6d; color: white; padding: 0 20px; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; font-size: 1rem; min-width: 100px; height: 45px; display: flex; align-items: center; justify-content: center; }
+    button { background-color: #ff4d6d; color: white; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; font-size: 1rem; width: 110px; height: 45px; display: flex; align-items: center; justify-content: center; }
     #noBtn { background-color: #adb5bd; transition: 0.1s; position: relative; }
     #message-box { display: none; text-align: left; font-size: 1rem; line-height: 1.6; color: #333; white-space: pre-wrap; margin-top: 8px; }
     .cursor { display: inline-block; width: 8px; background-color: #ff4d6d; animation: blink 0.7s infinite; margin-left: 2px; }
@@ -28,17 +28,17 @@
   <div class="card">
     <div id="input-ui">
       <h2>Please Enter Your Name 🥺</h2>
-      <input type="text" id="idName" placeholder="Name here..." autocomplete="off" />
+      <input type="text" id="userName" placeholder="Name here..." autocomplete="off" />
       <div class="btn-group">
-        <button type="button" onclick="start()">Submit</button>
-        <button type="button" id="noBtn" onmouseover="move()" onclick="move()">No</button>
+        <button type="button" onclick="revealSecret()">Submit</button>
+        <button type="button" id="noBtn" onmouseover="dodge()" onclick="dodge()">No</button>
       </div>
     </div>
     <div id="message-box"></div>
   </div>
 
   <script>
-    function hearts() {
+    function spawnHeart() {
       const h = document.createElement('div');
       h.classList.add('heart');
       h.innerHTML = '❤️';
@@ -48,7 +48,7 @@
       setTimeout(() => h.remove(), 5000);
     }
 
-    function move() {
+    function dodge() {
       const b = document.getElementById('noBtn');
       const x = Math.random() * (window.innerWidth - b.offsetWidth - 50);
       const y = Math.random() * (window.innerHeight - b.offsetHeight - 50);
@@ -57,20 +57,20 @@
       b.style.top = y + 'px';
     }
 
-    function start() {
-      const name = document.getElementById('idName').value.trim();
+    function revealSecret() {
+      const name = document.getElementById('userName').value.trim();
       if (!name) return;
 
       document.getElementById('bgMusic').play();
-      setInterval(hearts, 300);
+      setInterval(spawnHeart, 300);
       document.getElementById('input-ui').style.display = 'none';
       const box = document.getElementById('message-box');
       box.style.display = 'block';
       
-      const txt = "Hello, " + name + "!\n\nI want to confess u something, i made this long message to confess my feelings for you idk how i felt right now, i just wanna express my feelings to u and i want to clear things with you\n\nYes i like u for a long time na, hahahaha sound cringe ba? i know you like someone else and there's so many people better than me, but i just want you to know that i likee you.\n\nI made this code just to show u how deeply I'm in love with you.\n\ntake caree🫶🏻\n\n- Ely";
+      const txt = "Hello, " + name + "!\n\nI want to confess something to you... I made this message to express how I feel because I wanted to be honest with you.\n\nYes, I've liked you for a long time. I know you might like someone else, and there are many people out there, but I just wanted you to know that I really like you.\n\nI made this code just to show you how much I care.\n\nTake care always 🫶🏻\n\n- Ely";
       
       let i = 0;
-      function type() {
+      function typeWriter() {
         if (i < txt.length) {
           box.textContent = txt.substring(0, i + 1);
           const c = document.createElement('span');
@@ -78,13 +78,14 @@
           c.textContent = '|';
           box.appendChild(c);
           i++;
-          setTimeout(type, 50);
+          setTimeout(typeWriter, 50);
         } else {
           box.textContent = txt;
         }
       }
-      type();
+      typeWriter();
     }
   </script>
 </body>
 </html>
+
