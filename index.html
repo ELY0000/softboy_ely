@@ -2,18 +2,18 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" />
   <title>Uhm...</title>
   <style>
     body { margin: 0; overflow: hidden; display: flex; justify-content: center; align-items: center; min-height: 100vh; background-color: #fff0f3; background-image: url('https://www.transparenttextures.com/patterns/heart.png'); font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
     .heart { position: fixed; top: -10%; color: #ff4d6d; font-size: 20px; user-select: none; z-index: 0; animation: fall linear forwards; }
     @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
-    .card { background: white; padding: 25px; border-radius: 20px; box-shadow: 0 10px 30px rgba(255, 182, 193, 0.4); text-align: center; max-width: 350px; width: 85%; border: 2px solid #ffb6c1; z-index: 10; position: relative; }
+    .card { background: white; padding: 25px; border-radius: 20px; box-shadow: 0 10px 30px rgba(255, 182, 193, 0.4); text-align: center; max-width: 320px; width: 85%; border: 2px solid #ffb6c1; z-index: 10; position: relative; }
     h2 { color: #ff4d6d; font-size: 1.3rem; margin-bottom: 15px; }
     input { width: 90%; padding: 12px 0; margin: 10px 0 20px; border: 2px solid #ffb6c1; border-radius: 10px; outline: none; font-size: 1rem; text-align: center; }
-    .btn-group { display: flex; justify-content: center; align-items: center; gap: 15px; }
-    button { background-color: #ff4d6d; color: white; padding: 10px 20px; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; font-size: 1rem; min-width: 100px; }
-    #noBtn { background-color: #adb5bd; transition: 0.1s; }
+    .btn-group { display: flex; justify-content: center; align-items: center; gap: 15px; width: 100%; }
+    button { background-color: #ff4d6d; color: white; padding: 0 20px; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; font-size: 1rem; min-width: 100px; height: 45px; display: flex; align-items: center; justify-content: center; }
+    #noBtn { background-color: #adb5bd; transition: 0.1s; position: relative; }
     #message-box { display: none; text-align: left; font-size: 1rem; line-height: 1.6; color: #333; white-space: pre-wrap; margin-top: 8px; }
     .cursor { display: inline-block; width: 8px; background-color: #ff4d6d; animation: blink 0.7s infinite; margin-left: 2px; }
     @keyframes blink { 50% { opacity: 0; } }
@@ -28,138 +28,59 @@
   <div class="card">
     <div id="input-ui">
       <h2>Please Enter Your Name 🥺</h2>
-      <input type="text" id="nameInput" placeholder="Name here..." autocomplete="off" />
+      <input type="text" id="idName" placeholder="Name here..." autocomplete="off" />
       <div class="btn-group">
-        <button onclick="startProcess()">Submit</button>
-        <button id="noBtn" onmouseover="moveNo()" onclick="moveNo()">No</button>
+        <button type="button" onclick="start()">Submit</button>
+        <button type="button" id="noBtn" onmouseover="move()" onclick="move()">No</button>
       </div>
     </div>
     <div id="message-box"></div>
   </div>
 
   <script>
-    function createHeart() {
-      const heart = document.createElement('div');
-      heart.classList.add('heart');
-      heart.innerHTML = '❤️';
-      heart.style.left = Math.random() * 100 + 'vw';
-      heart.style.animationDuration = Math.random() * 2 + 3 + 's';
-      document.body.appendChild(heart);
-      setTimeout(() => heart.remove(), 5000);
+    function hearts() {
+      const h = document.createElement('div');
+      h.classList.add('heart');
+      h.innerHTML = '❤️';
+      h.style.left = Math.random() * 100 + 'vw';
+      h.style.animationDuration = Math.random() * 2 + 3 + 's';
+      document.body.appendChild(h);
+      setTimeout(() => h.remove(), 5000);
     }
 
-    function moveNo() {
-      const btn = document.getElementById('noBtn');
-      const x = Math.random() * (window.innerWidth - btn.offsetWidth - 50);
-      const y = Math.random() * (window.innerHeight - btn.offsetHeight - 50);
-      btn.style.position = 'fixed';
-      btn.style.left = x + 'px';
-      btn.style.top = y + 'px';
+    function move() {
+      const b = document.getElementById('noBtn');
+      const x = Math.random() * (window.innerWidth - b.offsetWidth - 50);
+      const y = Math.random() * (window.innerHeight - b.offsetHeight - 50);
+      b.style.position = 'fixed';
+      b.style.left = x + 'px';
+      b.style.top = y + 'px';
     }
 
-    function startProcess() {
-      const name = document.getElementById('nameInput').value.trim();
+    function start() {
+      const name = document.getElementById('idName').value.trim();
       if (!name) return;
 
       document.getElementById('bgMusic').play();
-      setInterval(createHeart, 300);
+      setInterval(hearts, 300);
       document.getElementById('input-ui').style.display = 'none';
       const box = document.getElementById('message-box');
       box.style.display = 'block';
       
-      const fullText = "Hello, " + name + "!\n\nI want to confess u something, i made this long message to confess my feelings for you idk how i felt right now, i just wanna express my feelings to u and i want to clear things with you\n\nYes i like u for a long time na, hahahaha sound cringe ba? i know you like someone else and there's so many people better than me, but i just want you to know that i likee you.\n\nI made this code just to show u how deeply I'm in love with you.\n\ntake caree🫶🏻\n\n- Ely";
+      const txt = "Hello, " + name + "!\n\nI want to confess u something, i made this long message to confess my feelings for you idk how i felt right now, i just wanna express my feelings to u and i want to clear things with you\n\nYes i like u for a long time na, hahahaha sound cringe ba? i know you like someone else and there's so many people better than me, but i just want you to know that i likee you.\n\nI made this code just to show u how deeply I'm in love with you.\n\ntake caree🫶🏻\n\n- Ely";
       
       let i = 0;
       function type() {
-        if (i < fullText.length) {
-          box.textContent = fullText.substring(0, i + 1);
-          const cursor = document.createElement('span');
-          cursor.className = 'cursor';
-          cursor.textContent = '|';
-          box.appendChild(cursor);
+        if (i < txt.length) {
+          box.textContent = txt.substring(0, i + 1);
+          const c = document.createElement('span');
+          c.className = 'cursor';
+          c.textContent = '|';
+          box.appendChild(c);
           i++;
           setTimeout(type, 50);
         } else {
-          box.textContent = fullText;
-        }
-      }
-      type();
-    }
-  </script>
-</body>
-</html>
-
-  <audio id="bgMusic" loop>
-    <source src="https://files.catbox.moe/6w1vto.mp3" type="audio/mpeg">
-  </audio>
-
-  <div class="card">
-    <div id="input-ui">
-      <h2>Please Enter Your Name 🥺</h2>
-      <input type="text" id="nameInput" placeholder="Name here..." autocomplete="off" />
-      <div class="btn-group">
-        <button onclick="startProcess()">Submit</button>
-        <button id="noBtn" onmouseover="moveNo()" onclick="moveNo()">No</button>
-      </div>
-    </div>
-    <div id="message-box"></div>
-  </div>
-
-  <script>
-    // Audio and Visual triggers
-    function createHeart() {
-      const heart = document.createElement('div');
-      heart.classList.add('heart');
-      heart.innerHTML = '❤️';
-      heart.style.left = Math.random() * 100 + 'vw';
-      heart.style.animationDuration = Math.random() * 2 + 3 + 's';
-      document.body.appendChild(heart);
-      setTimeout(() => heart.remove(), 5000);
-    }
-
-    function moveNo() {
-      const btn = document.getElementById('noBtn');
-      const x = Math.random() * (window.innerWidth - btn.offsetWidth - 50);
-      const y = Math.random() * (window.innerHeight - btn.offsetHeight - 50);
-      btn.style.position = 'fixed';
-      btn.style.left = x + 'px';
-      btn.style.top = y + 'px';
-    }
-
-    function startProcess() {
-      const nameInput = document.getElementById('nameInput');
-      const name = nameInput.value.trim();
-      if (!name) return;
-
-      // Start music and hearts
-      document.getElementById('bgMusic').play();
-      setInterval(createHeart, 300);
-
-      document.getElementById('input-ui').style.display = 'none';
-      const box = document.getElementById('message-box');
-      box.style.display = 'block';
-      
-      const fullText = "Hello, " + name + "!\n\nI want to confess u something, i made this long message to confess my feelings for you idk how i felt right now, i just wanna express my feelings to u and i want to clear things with you\n\nYes i like u for a long time na, hahahaha sound cringe ba? i know you like someone else and there's so many people better than me, but i just want you to know that i likee you.\n\nI made this code just to show u how deeply I'm in love with you.\n\ntake caree🫶🏻\n\n- Ely";
-      
-      let i = 0;
-      function type() {
-        if (i < fullText.length) {
-          box.textContent = fullText.substring(0, i + 1);
-          const cursor = document.createElement('span');
-          cursor.className = 'cursor';
-          cursor.textContent = '|';
-          box.appendChild(cursor);
-          i++;
-          setTimeout(type, 50);
-        } else {
-          box.textContent = fullText;
-        }
-      }
-      type();
-    }
-  </script>
-</body>
-</html>
+          box.textContent = txt;
         }
       }
       type();
